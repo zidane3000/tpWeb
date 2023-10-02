@@ -4,35 +4,37 @@
 function DnD(canvas, interactor) {
 	// Définir ici les attributs de la 'classe'
   this.press=false;
-
+  this.interactor=interactor;
   this.xi=0;
   this.yi=0;
   this.xf=0;
   this.yf=0;
 	// Developper les 3 fonctions gérant les événements
   this.Click=function Click(evt) {
-    if(this.press==false){
-    this.xi=evt.x;
-    this.yi=evt.y;
+      res=getMousePosition(canvas, evt);
+    this.xi=res.x;
+    this.yi=res.y;
     console.log("Click X= "+this.xi+" Y= "+this.yi);
-    }
     this.press=true;
+    interactor.onInteractionStart(this);
   }.bind(this);
+
   this.Hold=function Hold(evt) {
     if(this.press==true){
       res=getMousePosition(canvas, evt);
       this.xf=res.x;
       this.yf=res.y;
       console.log("Hold X= "+this.xf+" Y= "+this.yf);
+     interactor.onInteractionUpdate(this);
     }
   }.bind(this);
 
   this.Release=function Release(evt) {
-    if(this.press==true){
-      this.xf=evt.x;
-      this.yf=evt.y;
+      res=getMousePosition(canvas, evt);
+      this.xf=res.x;
+      this.yf=res.y;
       console.log("Release X= "+this.xf+" Y= "+this.yf);
-    }
+    interactor.onInteractionEnd(this);
     this.press=false;
   }.bind(this);
 

@@ -4,22 +4,29 @@
 
 class Drawing {
   constructor() {
-    this.shapes = [];
+    this.shapes = new Map() ;
   }
-  addShape(shape) {
-    this.shapes.push(shape);
+  addShape(uuid,shape) {
+    this.shapes.set(uuid,shape);
   }
   getShapes() {
     return this.shapes;
   }
-  removeShape(index) {
-    this.shapes.splice(index, 1);
+  removeShape(uuid) {
+    this.shapes.delete(uuid);
   }
+  
 }
 class Shape {
   constructor(lineWidth, colour) {
     this.lineWidth = lineWidth;
     this.colour = colour;
+  }
+  getLineWidth() {
+    return this.lineWidth;
+  }
+  getColour() {
+    return this.colour;
   }
 }
 class Rectangle extends Shape {
@@ -46,25 +53,25 @@ class Rectangle extends Shape {
     
 }
 class Line extends Shape {
-    constructor(x1, y1, x2, y2, lineWidth, colour) {
+    constructor(xi, yi, xf, yf, lineWidth, colour) {
         super(lineWidth, colour);
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
+        this.xi = xi;
+        this.yi = yi;
+        this.xf = xf;
+        this.yf = yf;
     }
-    getInitX=function getInitX(){
-      return this.x1;
-    }.bind(this);
-    getInitY=function getInitY(){
-      return this.y1;
-    }.bind(this);
-    getFinalX=function getFinalX(){
-      return this.x2;
-    }.bind(this);
-    getFinalY=function getFinalY(){
-      return this.y2;
-    }.bind(this);
+     getInitX(){
+      return this.xi;
+    }
+     getInitY(){
+      return this.yi;
+    }
+     getFinalX(){
+      return this.xf;
+    }
+    getFinalY(){
+      return this.yf;
+    }
 
 
     
