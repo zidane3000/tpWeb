@@ -2,9 +2,9 @@
 var editingMode = { rect: 0, line: 1 };
 
 function Pencil(ctx, drawing, canvas) {
-	// this.currEditingMode = editingMode.line;
-	// this.currLineWidth = 5;
-	// this.currColour = '#000000';
+	this.currEditingMode = editingMode.line;
+	this.currLineWidth = 5;
+	this.currColour = '#000000';
 	this.currentShape = 0;
 
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
@@ -34,12 +34,12 @@ function Pencil(ctx, drawing, canvas) {
 	}.bind(this);
 
 	this.onInteractionEnd = function (dnd) {
-		var uuid=generateUUID();
-		drawing.addShape(uuid,this.currentShape);
+		var uuid=Math.random().toString(16).slice(2);
+		drawing.shapes.set(uuid,this.currentShape);
 		drawing.paint(ctx,canvas);
 		this.currentShape.paint(ctx);
-		updateShapeList(uuid,this.currentShape);
-		document.getElementById('remove').onclick = (event) => remove(drawing,currentTarget.id.substring(6),ctx,canvas); 
+		 updateShapeList(uuid,this.currentShape);
+		//document.getElementById('remove'+uuid).onclick = (event) => remove(drawing,currentTarget.id.substring(6),ctx,canvas); 
 	}.bind(this);
 
 	remove = function (drawing,uuid,ctx,canvas) {
@@ -47,12 +47,7 @@ function Pencil(ctx, drawing, canvas) {
 		drawing.paint(ctx,canvas);
 		document.getElementById('shape'+uuid).remove();
 	}.bind(this);
-	updateShapeList = function (uuid,shape) {
-		var li = document.createElement('li');
-		li.id = 'shape'+uuid;
-		li.innerHTML = shape.toString();
-		document.getElementById('shapeList').appendChild(li);
-	}.bind(this);
+	
 
 	
 };

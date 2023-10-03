@@ -45,10 +45,10 @@ class Rectangle extends Shape {
       return this.y;
     }.bind(this);
     getFinalX=function getFinalX(){
-      return this.x+this.width;
+      return this.width;
     }.bind(this);
     getFinalY=function getFinalY(){
-      return this.y+this.height;
+      return this.height;
     }.bind(this);
     
 }
