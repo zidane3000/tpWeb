@@ -1,5 +1,5 @@
 
-var editingMode = { rect: 0, line: 1 };
+var editingMode = { rect: 0, line: 1 , circle: 2};
 
 function Pencil(ctx, drawing, canvas) {
 	this.currEditingMode = editingMode.line;
@@ -7,9 +7,11 @@ function Pencil(ctx, drawing, canvas) {
 	this.currColour = '#000000';
 	this.currentShape = 0;
 
+
 	// Liez ici les widgets à la classe pour modifier les attributs présents ci-dessus.
 	document.getElementById('butRect').onclick = (_) => this.currEditingMode=editingMode.rect;
 	document.getElementById('butLine').onclick = (_) => this.currEditingMode=editingMode.line;
+	document.getElementById('butCircle').onclick = (_) => this.currEditingMode=editingMode.circle;
 	document.getElementById('spinnerWidth').onchange = (e) => this.currLineWidth = e.target.value;
 	document.getElementById('colour').onchange = (e) => this.currColour=e.target.value;
 	new DnD(canvas, this);
@@ -18,16 +20,20 @@ function Pencil(ctx, drawing, canvas) {
 	this.onInteractionStart = function (dnd) {
 		if (this.currEditingMode==editingMode.rect) {
 			this.currentShape=new Rectangle();
-		} else {
+		} else if (this.currEditingMode==editingMode.line) {
 			this.currentShape=new Line();
+		}else if (this.currEditingMode==editingMode.circle) {
+			this.currentShape=new Circle();
 		}
 	}.bind(this);
 
 	this.onInteractionUpdate = function (dnd) {
 		if (this.currEditingMode==editingMode.rect) {
 			this.currentShape=new Rectangle(dnd.xi,dnd.yi,dnd.xf-dnd.xi,dnd.yf-dnd.yi,this.currLineWidth,this.currColour);
-		} else {
+		} else if (this.currEditingMode==editingMode.line) {
 			this.currentShape=new Line(dnd.xi,dnd.yi,dnd.xf,dnd.yf,this.currLineWidth,this.currColour);
+		}else if (this.currEditingMode==editingMode.circle) {
+			this.currentShape=new Circle(dnd.xi,dnd.yi,Math.sqrt((dnd.xf-dnd.xi)*(dnd.xf-dnd.xi)+(dnd.yf-dnd.yi)*(dnd.yf-dnd.yi)),this.currLineWidth,this.currColour);
 		}
 		drawing.paint(ctx,canvas);
 		this.currentShape.paint(ctx);

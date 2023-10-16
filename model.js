@@ -72,7 +72,30 @@ class Line extends Shape {
     getFinalY(){
       return this.yf;
     }
-
-
+}
+class Circle extends Shape {
+    constructor(x, y, rayon, lineWidth, colour) {
+        super(lineWidth, colour);
+        this.x = x;
+        this.y = y;
+        this.rayon = rayon;
+        this.degree_start = 0;
+        this.degree_end = 2 * Math.PI;
+    }
+    getInitX(){
+      return this.x;
+    }
+    getInitY(){
+      return this.y;
+    }
+    getRayon(){
+      return this.rayon;
+    }
+    getDegreeStart(){
+      return this.degree_start;
+    }
+    getDegreeEnd(){
+      return this.degree_end;
+    }
     
 }
